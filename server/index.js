@@ -1,27 +1,14 @@
-import express from "express";
-import mongoose from 'mongoose';
-import dotenv from "dotenv";
-import userRouter from "./controllers/user_controller.js";
+import mongoose from "mongoose";
+import { app } from "./routes.js";
 
-
-dotenv.config();
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Connecting db with mongoose
-const connection = mongoose.connection
-mongoose.connect("mongodb://localhost:27017", {
+mongoose.connect("mongodb://localhost:27017/erentals", {
+    serverSelectionTimeoutMS: 5000,
     useNewUrlParser: true,
-})
-connection.once('open', () => {
-    console.log("DB connected.");
-})
+}).catch(err => console.log(err.reason))
 
-app.get("/", (req, res) => {
-    res.json("Hello this is the backend");
-})
-app.use("/users", userRouter);
-// Starting the dev server
-app.listen(PORT, () => {
-    console.log(`Connected to the server and listening on ${PORT}`);
-})
+// New database connection
+const db = mongoose.connection;
+db.on("error", () => console.error.bind(console, "connection error: "));
+db.once("open", () => { console.log("Connected Successfully to DB") })
+
+app.listen(8000, () => console.log("Connected to server."))
