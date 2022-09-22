@@ -1,6 +1,7 @@
 import express from "express";
 import { user as UserModule } from "./models/user_model.js";
 import bodyParser from "body-parser";
+import getErrors from "./elog.js";
 
 export const app = express();
 
@@ -16,18 +17,24 @@ app.get("/", (req, res) => {
 })
 
 app.post("/users/new", async (req, res) => {
+    // try {
+    //     const val = await user.save();
+    //     res.send(val);
+    // } catch (error) {
+    //     var respo = getErrors(error);
+    //     res.status(500).send(respo);
+    // }
     const user = new UserModule(req.body);
     try {
-        const val = await user.save();
-        res.send(val);
-    } catch (error) {
-        var result={
-            status:500,
-            name:error._message,
-            message:error["errors"]["username"].message
-        }
-
-        res.status(500).send(result);
+        const val = await user.save(function (error, _document) {
+            //check for errors
+            let resp = getErrors(error);
+            //Send Errors to browser
+            res.status(resp.status).send(resp);
+        });
+    }
+    catch (e) {
+        res.status(404).send("Internal server error. Please contact Support team!")
     }
 })
 
