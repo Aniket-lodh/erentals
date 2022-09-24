@@ -1,7 +1,7 @@
 function getErrors(error) {
     let errorArray = [];
     let result = {
-        status: 500,
+        status: 400,
         type: error?._message,
         message: {},
     }
@@ -19,8 +19,8 @@ function getErrors(error) {
     } else {
         result.status=200;
         result.type="Successful";
-        result.message='No Errors found, Saved Succefully'
+        result.message='No Errors found, Saved Successfully'
     }
     return result
-};
+}
 export default getErrors;

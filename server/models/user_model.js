@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, "user name is required"],
-        minlength: [6, 'Minimun length 6 characters'],
+        minlength: [6, 'Minimum length 6 characters'],
         maxlength: [15, "Maximum length 15 characters"]
     },
     gender: {
@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     passcode: {
         type: String,
         required: [true, "password cannot be empty"],
-        minlength: [10, 'Minimun code length 10 characters']
+        minlength: [10, 'Minimum code length 10 characters']
     }
 });
 // 1st parameter in model stands for the database table name in mongodb
