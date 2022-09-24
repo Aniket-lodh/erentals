@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     user_type: {
         type: String,
         required: [true, "user type is required!"],
-        enum: ["customer", "vendor"] //enum checks if the received parameter is one of these 2 options or not.
+        enum: ["customer", "vendor","Customer","Vendor"] //enum checks if the received parameter is one of these 2 options or not.
     },
     username: {
         type: String,
@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        required: [true, "gender is required"]
+        required: [true, "gender is required"],
+        enum:["male","female","others","Male","Female","Others"]
     },
     email: {
         type: String,
@@ -32,7 +33,7 @@ const userSchema = new mongoose.Schema({
     },
     address: {
         type: String,
-        required: "address cannot be empty"
+        required: [true, "address cannot be empty"],
     },
     passcode: {
         type: String,
