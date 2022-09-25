@@ -37,8 +37,7 @@ const userSchema = new mongoose.Schema({
     },
     passcode: {
         type: String,
-        required: [true, "password cannot be empty"],
-        minlength: [10, 'Minimum code length 10 characters']
+        required: [true, "password cannot be empty"]
     }
 });
 // 1st parameter in model stands for the database table name in mongodb

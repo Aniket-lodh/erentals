@@ -2,7 +2,8 @@ import express from "express";
 import { user as UserModule } from "../models/user_model.js";
 import getErrors from "../elog.js";
 import { Error } from "mongoose";
-
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 const router = express.Router();
 
 // Getting all
@@ -25,12 +26,21 @@ router.get('/findone/:_id', getUser, async (req, res) => {
 
 //Loggin in
 router.get('/login', async (req, res) => {
-    const user = await UserModule.findOne(req.query)
+    const user = await UserModule.findOne({
+        "username": req.query.username
+    })
     try {
-        if (Object.keys(req.query).length==0) {
+        if (Object.keys(req.query).length == 0) {
             throw new Error("Couldn't find any matching records.");
         }
-        res.send(user);
+        const match = await bcrypt.compare(req.query.passcode, user.passcode)
+        if (match) {
+            const accessToken = jwt.sign(JSON.stringify(user), process.env.TOKEN_SECRET)
+            res.send({ Authorization: accessToken });
+        }
+        else {
+            throw new Error("Invalid Credentials!")
+        }
     }
     catch (err) {
         res.status(400).send({ message: err.message })
@@ -40,16 +50,23 @@ router.get('/login', async (req, res) => {
 // Creating one || Sign up
 router.post('/signup', async (req, res) => {
     try {
-        const user = new UserModule(req.body);
-        await user.save(function (error, _document) {
-            //check for errors
-            let resp = getErrors(error);
-            //Send Errors to browser
-            (resp.status === 200 ? resp._id = _document._id : '')
-            res.status(resp.status).json(resp);
-        });
+        if (req.body.passcode && req.body.passcode.length >= 10) {
+            req.body.passcode = await bcrypt.hash(req.body.passcode, 10);
+            const user = new UserModule(req.body);
+            await user.save(function (error, _document) {
+                //check for errors
+                let resp = getErrors(error);
+                //Send Errors to browser
+                (resp.status === 200 ? resp._id = _document._id : '')
+                res.status(resp.status).json(resp);
+            });
+        }
+        else {
+            throw new Error("Passcode cannot be empty and minimum length is 10 required.")
+        }
+
     } catch (e) {
-        res.status(500).send({ message: "Internal server error. Please contact Support team!" })
+        res.status(500).send({ message: e.message })
     }
 })
 
