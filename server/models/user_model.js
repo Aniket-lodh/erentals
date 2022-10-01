@@ -48,6 +48,9 @@ const userSchema = new mongoose.Schema({
         minlength: 10,
         select: false //hides the password 
     },
+    passcodeChangedAt: {
+        type: Date,
+    },
     createdAt: {
         type: Date,
         default: Date.now()

@@ -1,5 +1,7 @@
 import { user as UserModule } from "../models/user_model.js";
 import getErrors from "../utils/elog.js";
+import { createAccessToken } from "./authController.js";
+
 
 export const getAllUsers = async (req, res, next) => {
     try {
@@ -13,14 +15,16 @@ export const getAllUsers = async (req, res, next) => {
 export const createUser = async (req, res, next) => {
     try {
         const user = new UserModule(req.body);
-        await user.save(function (error, _document) {
+        // console.log(user)
+        user.save(function (error, _document) {
             //check for errors
-            let resp = getErrors(error);
+            const resp = getErrors(error);
+
+
             //Send Errors to browser
-            (resp.status === 200 ? resp._id = _document._id : '')
+            (resp.status === 200 ? resp.accessToken = createAccessToken(_document) : '');
             res.status(resp.status).json(resp);
         });
-
     } catch (e) {
         res.status(500).send({ message: e.message })
     }
@@ -30,7 +34,7 @@ export const createUser = async (req, res, next) => {
 export const getUser = async (req, res) => {
     res.send(res.user)
 }
- 
+
 export const updateUser = async (req, res) => {
 
     (req.body.username ? res.user.username = req.body.username : '');
