@@ -41,8 +41,18 @@ export const getVehicle = async (req, res, next) => {
 
 
 export const delVehicle = async (req, res, next) => {
-    const deletedVehicle = await Vehicle.findByIdAndDelete(req.params.id);
+
     try {
+        if (res.user.user_type != "vendor") {
+            res.status(403).send({
+                status: 403,
+                message: "You dont have access to this.",
+                data: null
+            })
+        }
+        const deletedVehicle = await Vehicle.findOneAndDelete({
+            "ownerId": res.user._id,
+        });
         if (!deletedVehicle) throw new Error("Invalid Credentials.");
         res.status(200).send({
             status: 200,

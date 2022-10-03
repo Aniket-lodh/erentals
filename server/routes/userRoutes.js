@@ -12,8 +12,8 @@ const router = express.Router();
 
 // All the available user routes
 router.route("/")
-    .get(getAllUsers)
-    .post(createUser);
+    .get(getAllUsers) 
+    .post(createUser); //Signup user
 
 router.route("/:id")
     .get(findUser, getUser)

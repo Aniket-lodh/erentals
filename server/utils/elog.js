@@ -8,9 +8,9 @@ function getErrors(error) {
     if (error) {
 
         if (!error.errors) {
-            if(error.code===11000 && error.keyPattern.email>0){
-                result.message="Email already exists, try a diffrent value!"
-            }
+            if (error.code === 11000 && error.keyPattern.email > 0)
+                result.message = "Email already exists, try a diffrent value!"
+
         }
         else {
             Object.keys(error.errors).forEach(k => {

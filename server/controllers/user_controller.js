@@ -11,29 +11,25 @@ export const getAllUsers = async (req, res, next) => {
         res.status(500).send(error);
     }
 }
-
+// url format : users/632c797f9764b42d31a531c3?email=abc@gmail.com
+// Params get the id and query get all attributes after ?
+export const getUser = async (req, res) => {
+    res.send(res.user)
+}
 export const createUser = async (req, res, next) => {
     try {
         const user = new UserModule(req.body);
-        // console.log(user)
-        user.save(function (error, _document) {
-            //check for errors
-            const resp = getErrors(error);
-
-
+        user.save(async function (error, _document) {
+            const resp = getErrors(error); //check for errors
             //Send Errors to browser
-            (resp.status === 200 ? resp.accessToken = createAccessToken(_document) : '');
+            (resp.status === 200 ? resp.accessToken = await createAccessToken(_document) : '');
             res.status(resp.status).json(resp);
         });
     } catch (e) {
         res.status(500).send({ message: e.message })
     }
 }
-// url format : users/632c797f9764b42d31a531c3?email=abc@gmail.com
-// Params get the id and query get all attributes after ?
-export const getUser = async (req, res) => {
-    res.send(res.user)
-}
+
 
 export const updateUser = async (req, res) => {
 
