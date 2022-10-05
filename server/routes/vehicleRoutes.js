@@ -10,7 +10,7 @@ router.route("/")
 
 router.route("/:id")
     .get(verifyToken, verifyUser, getVehicle)
-    .patch(verifyToken, verifyUser, updateVehicle)
+    // .patch(verifyToken, verifyUser, updateVehicle)
     .delete(verifyToken, verifyUser, delVehicle);
 
 export default router;

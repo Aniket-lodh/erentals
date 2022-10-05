@@ -13,7 +13,11 @@ export const getAllVehicles = async (req, res, next) => {
     if (!vehicles) return res.status(200).send({ status: 200, message: "No available vehicles found.", data: null })
     res.status(200).send({ status: 200, message: "Successfully retreived", data: vehicles });
 }
-
+/**
+ * Get a specific vehicle from the database
+ * @param req.params.id
+ * @returns exisiting vehicle if exists in the database else err message.
+**/
 export const getVehicle = async (req, res, next) => {
     const foundVehicle = await Vehicle.findById(req.params.id);
     try {
@@ -32,7 +36,11 @@ export const getVehicle = async (req, res, next) => {
         });
     }
 }
-
+/**
+ * creates a vehicle from the database
+ * @param req.body in JSON form
+ * @returns newly created vehicle id with owner-Id.
+**/
 export const createVehicle = async (req, res, next) => {
     if (res.user.user_type !== "vendor")
         return res.status(403).send({
@@ -75,7 +83,14 @@ export const createVehicle = async (req, res, next) => {
     }
 }
 
-
+/**
+ * deletes a specific vehicle from the database
+ * @param req.params.id
+ * @param res.user passed from the middleware
+ * @returns Finds and deletes from the database.
+ * Upon encountering error throws respective messages.
+ * After successful deletion removes the vehicle list from the user collection.
+**/
 export const delVehicle = async (req, res, next) => {
     if (res.user.user_type != "vendor")
         return res.status(403).send({
@@ -109,26 +124,26 @@ export const delVehicle = async (req, res, next) => {
         });
     }
 }
-export const updateVehicle = async (req, res, next) => {
-    if (res.user.user_type != "vendor")
-        return res.status(401).send({
-            status: 403,
-            message: "You dont have access to this.",
-            data: null
-        })
-    try {
-        const updatedVehicle = await Vehicle.findOneAndUpdate(
-            {
-                "_id": req.params.id,
-                "ownerId": res.user._id,
-            },
-            req.body
-        )
-        if (updateVehicle) {
-            res.status(200).send({ status: 200, message: "Updated Successfully", data: updatedVehicle })
-        }
-    }
-    catch (e) {
-        res.status(400).send({ status: 500, message: e, data: null })
-    }
-}
+// export const updateVehicle = async (req, res, next) => {
+//     if (res.user.user_type != "vendor")
+//         return res.status(401).send({
+//             status: 403,
+//             message: "You dont have access to this.",
+//             data: null
+//         })
+//     try {
+//         const updatedVehicle = await Vehicle.findOneAndUpdate(
+//             {
+//                 "_id": req.params.id,
+//                 "ownerId": res.user._id,
+//             },
+//             req.body
+//         )
+//         if (updateVehicle) {
+//             res.status(200).send({ status: 200, message: "Updated Successfully", data: updatedVehicle })
+//         }
+//     }
+//     catch (e) {
+//         res.status(400).send({ status: 500, message: e, data: null })
+//     }
+// }
