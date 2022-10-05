@@ -51,6 +51,9 @@ const userSchema = new mongoose.Schema({
     passcodeChangedAt: {
         type: Date,
     },
+    listings:{
+        type:Array,
+    },
     createdAt: {
         type: Date,
         default: Date.now()

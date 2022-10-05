@@ -50,7 +50,8 @@ const vehicleSchema = new mongoose.Schema(
         createdAt: {
             type: Date,
             default: Date.now()
-        }
+        },
+        updatedAt: { type: Date }
     }
 );
 export const Vehicle = mongoose.model('vehicle', vehicleSchema);
