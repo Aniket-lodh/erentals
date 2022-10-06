@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
     user_type: {
         type: String,
         required: [true, "user type is required!"],
-        enum: ["customer", "vendor", "Customer", "Vendor"] //enum checks if the received parameter is one of these 2 options or not.
+        enum: ["customer", "vendor", "Customer", "Vendor"],//enum checks if the received parameter is one of these 2 options or not.
+        default: "customer"
     },
     username: {
         type: String,
@@ -51,9 +52,9 @@ const userSchema = new mongoose.Schema({
     passcodeChangedAt: {
         type: Date,
     },
-    listings:{
-        type:Array,
-    },
+    listings: {
+        type: Array,
+    },//TODO: only create the listings array if the user type is vendor
     createdAt: {
         type: Date,
         default: Date.now()
@@ -65,5 +66,8 @@ userSchema.pre('save', async function (next) {
     next()
 })
 
+userSchema.methods.correctPassword = async (candidatePassword, userPassword) => {
+    return await bcrypt.compare(candidatePassword, userPassword);
+};
 // 1st parameter in model stands for the database table name in mongodb
 export const user = mongoose.model('user', userSchema);
