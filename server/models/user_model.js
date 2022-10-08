@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
+import { ObjectId } from "mongodb";
 
 /**
  * The format of the user Model.
@@ -53,7 +54,8 @@ const userSchema = new mongoose.Schema({
         type: Date,
     },
     listings: {
-        type: Array,
+        type: [ObjectId],
+        default: undefined
     },//TODO: only create the listings array if the user type is vendor
     createdAt: {
         type: Date,

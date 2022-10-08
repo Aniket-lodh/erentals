@@ -7,7 +7,7 @@ export const createAccessToken = async function (user) {
     const accessToken = jwt.sign(id, process.env.TOKEN_SECRET);
     return accessToken
 }
-//TODO: need to improve
+//FIXME: need to improve
 
 export const verifyToken = async (req, res, next) => {
     const bearerToken = await req.headers['authorization'];

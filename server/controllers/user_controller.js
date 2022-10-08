@@ -103,7 +103,7 @@ export const loginUser = async (req, res, next) => {
     try {
         const { email, passcode } = req.body;
 
-        // 1) Check if email and password exist
+        // 1) Check if email and password is empty
         if (!email || !passcode)
             return res.status(400).send({ status: 400, message: 'Please provide email and password!', data: null });
 
