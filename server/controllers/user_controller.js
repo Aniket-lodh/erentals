@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { user as UserModule } from "../models/user_model.js";
 import getErrors from "../utils/elog.js";
 import { createAccessToken } from "./authController.js";
@@ -52,13 +53,18 @@ export const createUser = async (req, res, next) => {
 
 export const updateUser = async (req, res) => {
 
+    if (JSON.stringify(req.params.id) !== JSON.stringify(res.user._id)) {
+        return res.status(401).send({ status: 401, message: "Invalid user", data: null })
+    }
+
     (req.body.username ? res.user.username = req.body.username : '');
     (req.body.gender ? res.user.gender = req.body.gender : '');
     (req.body.email ? res.user.email = req.body.email : '');
     (req.body.phone ? res.user.phone = req.body.phone : '');
     (req.body.passcode ? res.user.passcode = req.body.passcode : '');
     (req.body.address ? res.user.address = req.body.address : '');
-
+  
+    res.user.updatedAt = new Date();
     try {
         await res.user.save(
             function (error, _document) {
@@ -71,16 +77,16 @@ export const updateUser = async (req, res) => {
             }
         )
     } catch (err) {
-        res.status(500).send({ message: "Internal server error. Please contact Support team!" })
+        res.status(500).send({ message: err.message })
     }
 }
 
 export const deleteUser = async (req, res) => {
     try {
         await res.user.remove()
-        res.send({ message: "Successfully removed" })
+        res.status(200).send({ status: 200, message: "Successfully removed", data: null })
     } catch (err) {
-        res.send({ message: err.message })
+        res.status(500).send({ status: 500, message: err.message, data: null })
     }
 }
 // GET THE DEDICATED USER
@@ -97,19 +103,17 @@ export const findUser = async (req, res, next) => {
     res.user = user
     next()
 }
-// TODO:Implement user login method
 
 export const loginUser = async (req, res, next) => {
     try {
         const { email, passcode } = req.body;
-
+        // console.log(passcode)
         // 1) Check if email and password is empty
         if (!email || !passcode)
             return res.status(400).send({ status: 400, message: 'Please provide email and password!', data: null });
 
         // 2) Check if user exists && password is correct
         const user = await UserModule.findOne({ email }).select('+passcode');
-        
         if (!user || !(await user.correctPassword(passcode, user.passcode))) //TODO: work on the userSchema method
             return res.status(401).send({ status: 401, message: "Email or Password is invalid.", data: null })
 

@@ -19,8 +19,8 @@ router.route("/")
     .post(createUser); //Signup user
 
 router.route("/:id")
-    .patch(findUser, updateUser)
-    .delete(findUser, deleteUser);
+    .patch(verifyToken,verifyUser, updateUser) //update the user
+    .delete(verifyToken,verifyUser, deleteUser); //delete the user
 
 router.route("/profile")
     .get(verifyToken, verifyUser, getProfile); //get user profile

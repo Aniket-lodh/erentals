@@ -56,15 +56,18 @@ const userSchema = new mongoose.Schema({
     listings: {
         type: [ObjectId],
         default: undefined
-    },//TODO: only create the listings array if the user type is vendor
+    },
     createdAt: {
-        type: Date,
-        default: Date.now()
-    }
+        type: String,
+        default: new Date()
+    },
+    updatedAt: {
+        type: String
+    },
 });
 
 userSchema.pre('save', async function (next) {
-    this.passcode = await bcrypt.hash(this.passcode, 12);
+    this.passcode = await bcrypt.hash(this.passcode, 10);
     next()
 })
 
