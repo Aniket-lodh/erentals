@@ -4,7 +4,6 @@ import {
     getAllUsers,
     createUser,
     getProfile,
-    findUser,
     updateUser,
     deleteUser,
     loginUser
@@ -18,14 +17,15 @@ router.route("/")
     .get(getAllUsers)
     .post(createUser); //Signup user
 
+router.route('/login')
+    .post(loginUser) //Signin user
+
 router.route("/:id")
-    .patch(verifyToken,verifyUser, updateUser) //update the user
-    .delete(verifyToken,verifyUser, deleteUser); //delete the user
+    .patch(verifyToken, verifyUser, updateUser) //update the user
+    .delete(verifyToken, verifyUser, deleteUser); //delete the user
 
 router.route("/profile")
     .get(verifyToken, verifyUser, getProfile); //get user profile
 
-router.route('/login')
-    .post(loginUser) //Signin user
 
 export default router;

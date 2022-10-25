@@ -38,4 +38,3 @@ export const verifyUser = async (req, res, next) => {
         return res.status(500).send({ status: 500, message: err.message })
     }
 }
-//TODO:work on the authenticate part of creating a vehicle of particular user

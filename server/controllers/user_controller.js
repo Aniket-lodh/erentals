@@ -50,7 +50,11 @@ export const createUser = async (req, res, next) => {
     }
 }
 
-
+/**
+ * udpates an user
+ * @param req.params.id for verification match if the given id and the token id matches or not
+ * @returns id of the user.
+**/
 export const updateUser = async (req, res) => {
 
     if (JSON.stringify(req.params.id) !== JSON.stringify(res.user._id)) {
@@ -80,7 +84,11 @@ export const updateUser = async (req, res) => {
         res.status(500).send({ message: err.message })
     }
 }
-
+/**
+ * deletes an user
+ * @param token Bearer token 
+ * @returns Successful response
+**/
 export const deleteUser = async (req, res) => {
     try {
         await res.user.remove()
@@ -89,20 +97,7 @@ export const deleteUser = async (req, res) => {
         res.status(500).send({ status: 500, message: err.message, data: null })
     }
 }
-// GET THE DEDICATED USER
-export const findUser = async (req, res, next) => {
-    let user;
-    try {
-        user = await UserModule.findById(req.params.id)
-        if (user == null) {
-            return res.status(404).send({ message: 'User doesn\'t exist' })
-        }
-    } catch (err) {
-        return res.status(500).send({ message: err.message })
-    }
-    res.user = user
-    next()
-}
+
 
 export const loginUser = async (req, res, next) => {
     try {

@@ -4,7 +4,7 @@ import usersRouter from "./routes/userRoutes.js";
 import vehicleRoutes from "./routes/vehicleRoutes.js";
 import dotenv from "dotenv";
 import chalk from "chalk";
-
+import cors from "cors";
 
 const app = express();
 dotenv.config();
@@ -24,6 +24,7 @@ const db = await mongoose.connection;
 db.on("error", (err) => console.error("connection error: " + err));
 db.once("open", () => console.log(chalk.blueBright("Successfully connected to DB 🗃")));
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
