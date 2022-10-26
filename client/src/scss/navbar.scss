@@ -1,0 +1,18 @@
+.Navbar {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+
+  div:not(div.cta_buttons) {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+    .nav_links {
+      display: flex;
+      list-style-type: none;
+      text-decoration: none;
+      gap: 1rem;
+    }
+  }
+}
