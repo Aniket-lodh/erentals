@@ -1,0 +1,28 @@
+.showcase {
+  &_wrapper {
+    display: flex;
+    padding: 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 500px;
+    background-color: red;
+
+    overflow: visible;
+  }
+  &_img_container {
+    background-color: blue;
+    overflow-x: visible;
+    position: relative;
+    height: 100%;
+    width:550px;
+    border-radius: 50px;
+    img{
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      right: -100px;
+      top: 0;
+    }
+  }
+}

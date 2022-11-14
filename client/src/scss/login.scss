@@ -124,6 +124,12 @@
       &:not(:placeholder-shown) {
         border: 1px solid #1a48ef !important;
       }
+
+      &::-ms-reveal {
+        display: block;
+        background-color: white;
+        margin-right: 25px;
+      }
     }
   }
 }

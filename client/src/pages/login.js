@@ -1,5 +1,5 @@
-import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import useToken from "../helpers/useToken";
 import axios from "axios";
 import "../scss/login.scss"
@@ -9,12 +9,15 @@ function Login() {
         "email": '',
         "passcode": ''
     });
-    const {token, setToken} = useToken();
+    const { token, setToken } = useToken();
     const navigate = useNavigate();
-
-
+    
+/**
+ * takes the target as input
+ * @returns updates the new Data to the setUser State
+**/
     const handleChange = function (event) {
-        const {name, value} = event.target;
+        const { name, value } = event.target;
         setUser(pVal => {
             return {
                 ...pVal,
@@ -35,46 +38,45 @@ function Login() {
         //TODO:improve the response sending/alert message
         if (response.status === 200) {
             setToken(response.data);
-            process.env.REACT_APP_USER_TOKEN = token;
             navigate("/");
         } else {
             console.error(response)
         }
     }
-
+//TODO:improve the login ui
     return (
-        <section className="login-container animate-in" style={{animationDelay: "600ms"}}>
-            <div className="login-wrapper animate-in" style={{animationDelay: "900ms"}}>
+        <section className="login-container animate-in" style={{ animationDelay: "600ms" }}>
+            <div className="login-wrapper animate-in" style={{ animationDelay: "900ms" }}>
                 <div className="login-headings">
-                    <h1 className="animate-left" style={{animationDelay: "1300ms"}}>Login</h1>
-                    <p className="animate-left" style={{animationDelay: "1500ms"}}>Enter your credentials</p>
+                    <h1 className="animate-left" style={{ animationDelay: "1300ms" }}>Login</h1>
+                    <p className="animate-left" style={{ animationDelay: "1500ms" }}>Enter your credentials</p>
                 </div>
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="login-inputs">
-                        <label htmlFor="email" className="animate-left" style={{animationDelay: "1600ms"}}>Email</label>
+                        <label htmlFor="email" className="animate-left" style={{ animationDelay: "1600ms" }}>Email</label>
                         <input type="text" name="email" id="email" placeholder="Email" required className="animate-left"
-                               style={{animationDelay: "1800ms"}}
-                               onChange={e => handleChange(e)}/>
-                        <span className="animate-left" style={{animationDelay: "1900ms"}}><i
+                            style={{ animationDelay: "1800ms" }}
+                            onChange={e => handleChange(e)} />
+                        <span className="animate-left" style={{ animationDelay: "1900ms" }}><i
                             className="ri-user-3-line"></i></span>
                     </div>
                     <div className="login-inputs">
                         <label htmlFor="passcode" className="animate-left"
-                               style={{animationDelay: "1600ms"}}>Password</label>
+                            style={{ animationDelay: "1600ms" }}>Password</label>
                         <input type="password" name="passcode" id="passcode" placeholder="Password" required
-                               className="animate-left" style={{animationDelay: "1800ms"}}
-                               onChange={e => handleChange(e)}/>
-                        <span className="animate-left" style={{animationDelay: "1900ms"}}><i
+                            className="animate-left" style={{ animationDelay: "1800ms" }}
+                            onChange={e => handleChange(e)} />
+                        <span className="animate-left" style={{ animationDelay: "1900ms" }}><i
                             className="ri-lock-2-fill"></i></span>
                     </div>
                     <div>
-                        <div className="keep-me animate-in" style={{animationDelay: "2100ms"}}>
-                            <input type="checkbox" id="keep-me"/>
+                        <div className="keep-me animate-in" style={{ animationDelay: "2100ms" }}>
+                            <input type="checkbox" id="keep-me" />
                             <label htmlFor="keep-me">Keep me logged in</label>
                         </div>
-                        <i className="forgot-pass animate-in" style={{animationDelay: "2100ms"}}>Forgot password?</i>
+                        <i className="forgot-pass animate-in" style={{ animationDelay: "2100ms" }}>Forgot password?</i>
                     </div>
-                    <button type="submit" className="animate-in" style={{animationDelay: "2300ms"}}>LOGIN</button>
+                    <button type="submit" className="animate-in" style={{ animationDelay: "2300ms" }}>LOGIN</button>
                 </form>
             </div>
         </section>

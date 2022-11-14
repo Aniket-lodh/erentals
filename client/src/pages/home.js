@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Showcase from "../components/Showcase";
 
 function Home() {
     return (
@@ -7,7 +8,7 @@ function Home() {
                 <Navbar />
             </header>
             <main>
-                home
+                <Showcase />
             </main>
         </>
     )

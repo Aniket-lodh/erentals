@@ -26,11 +26,11 @@ function Navbar() {
           </li>
         </ul>
         <div className="cta_buttons">
-          <BubblyLink to={"/signin"} className="cta_secondary">
-            Sign in
+          <BubblyLink to={"/signin"}>
+            <span className="cta_buttons_secondary"> Sign in</span>
           </BubblyLink>
-          <BubblyLink to={"/signup"} className="cta_primary">
-            Sign up
+          <BubblyLink to={"/signup"}>
+            <span className="cta_buttons_primary"> Sign up</span>
           </BubblyLink>
         </div>
       </div>

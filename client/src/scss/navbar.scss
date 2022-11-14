@@ -6,13 +6,33 @@
   div:not(div.cta_buttons) {
     display: flex;
     gap: 2rem;
+    width: 60%;
     align-items: center;
+    justify-content: space-between;
 
     .nav_links {
       display: flex;
       list-style-type: none;
       text-decoration: none;
       gap: 1rem;
+    }
+  }
+  .cta_buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+    &_primary {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0.7rem 1.2rem;
+      border-radius: 20px;
+      color: white;
+      background-color: #3999cd ;
+    }
+    &_secondary{
+      text-decoration: underline;
     }
   }
 }
