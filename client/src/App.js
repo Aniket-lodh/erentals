@@ -6,8 +6,8 @@ import Subscribe from "./pages/subscribe";
 import Why from "./pages/why";
 import Faq from "./pages/faq";
 import Login from "./pages/login";
+import Signup from "./pages/signup";
 import "./App.css";
-
 
 function App() {
 
@@ -23,6 +23,7 @@ function App() {
                     <Route path="why" element={<Why/>}/>
                     <Route path="faq" element={<Faq/>}/>
                     <Route path="signin" element={<Login/>}/>
+                    <Route path="signup" element={<Signup/>}/>
                     <Route path="*" element={<>No match</>}/>
                 </Route>
 
