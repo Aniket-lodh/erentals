@@ -7,6 +7,7 @@ import Why from "./pages/why";
 import Faq from "./pages/faq";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
+import ErrorPage from "./pages/errorpage.js";
 import "./App.css";
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
                     <Route path="faq" element={<Faq/>}/>
                     <Route path="signin" element={<Login/>}/>
                     <Route path="signup" element={<Signup/>}/>
-                    <Route path="*" element={<>No match</>}/>
+                    <Route path="*" element={<ErrorPage/>}/>
                 </Route>
 
             </Routes>
