@@ -1,12 +1,12 @@
 .showcase {
   &_wrapper {
     display: flex;
-    padding: 1rem;
     align-items: flex-start;
     justify-content: space-between;
     height: 450px;
     overflow: visible;
     position: relative;
+    width: 80%;
   }
   &_img_container {
     background-image: url("../assets/images/showcase_rect.svg");
