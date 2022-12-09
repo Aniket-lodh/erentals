@@ -20,12 +20,11 @@ router.route("/")
 router.route('/login')
     .post(loginUser) //Signin user
 
-router.route("/:id")
+router.route("/:id") //FIXME:update the :id to me
     .patch(verifyToken, verifyUser, updateUser) //update the user
     .delete(verifyToken, verifyUser, deleteUser); //delete the user
 
 router.route("/profile")
     .get(verifyToken, verifyUser, getProfile); //get user profile
-
 
 export default router;

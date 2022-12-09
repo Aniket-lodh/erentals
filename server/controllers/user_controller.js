@@ -102,7 +102,6 @@ export const deleteUser = async (req, res) => {
 export const loginUser = async (req, res, next) => {
     try {
         const { email, passcode } = req.body;
-        // console.log(passcode)
         // 1) Check if email and password is empty
         if (!email || !passcode)
             return res.status(400).send({ status: 400, message: 'Please provide email and password!', data: null });
